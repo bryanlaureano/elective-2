@@ -5,8 +5,8 @@
 import 'dart:io';
 import 'dart:core';
 
-var temp = [];
-var temp2 = [];
+var temp = [];//STORAGE OF THE COMBINED BOOKS AND BOOK1 LIST
+var temp2 = [];//COPY OF TEMP
 //I USE MIXIN CLASS TO BE REUSE BY THE PARENT CLASS
 mixin library_collections {
   var ISBN1 = [
