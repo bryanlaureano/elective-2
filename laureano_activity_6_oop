@@ -282,6 +282,7 @@ void main(List<String> arguments) {
   String? choice;
 
   do {
+    print("NOTE: CASE SENSITIVE");
     print("CHOICES: 1: Lend Books ");
     print("         2: Return Books");
     print("         3: Library Inventory");
