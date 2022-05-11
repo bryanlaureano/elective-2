@@ -1,0 +1,348 @@
+//BRYAN M. LAUREANO
+//BSCPE3A
+//ACTIVITY 6 - OOP
+
+import 'dart:io';
+import 'dart:core';
+
+var temp = [];
+var temp2 = [];
+//I USE MIXIN CLASS TO BE REUSE BY THE PARENT CLASS
+mixin library_collections {
+  var ISBN1 = [
+    //I INITIALIZE A LISTS (ISBN1,TITLES1,AUTHORS1,GENRE1) FOR BOOK ATTRIBUTES AND IT WILL SERVE AS A STORAGE FOR ADDING NEW BOOK
+    '9780367631383',
+    '9781032241630',
+    '9781465458551',
+    '9780226306315',
+    '9781950500994',
+    '9780393317558'
+  ];
+  var Titles1 = [
+    'A First Course in Aerial Robot and Drones:',
+    'Computer Graphics Through OpenGL:from theory to experiments:',
+    'The Philosophy Book BIG IDEAS SIMPLY EXPLAINED',
+    'The Politics of Pure Science Second Edition',
+    'Pop Out Around the World: Read, Build, and Play from New York to Beijing (Board book)',
+    'Guns, Germs, and Steel: The Fates of Human Societies'
+  ];
+  var Authors1 = [
+    'Yasmina Bestaoui Sebbane',
+    'Sumanta Guha',
+    'DK',
+    'Daniel S. Greenberg',
+    'duopress labs, Pretend Friends',
+    'Jared Diamond'
+  ];
+  var Genre1 = [
+    'Computer_Science',
+    'Computer_Science',
+    'Philosophy',
+    'Pure_Science',
+    'Art_and_Recreation',
+    'History'
+  ];
+}
+
+// ignore: camel_case_types
+//I LET THE LIBRARY_SYSTEM AS THE PARENT CLASS OF BOOKCOLLECTION WITH BOOKATTRIBUTE
+class Library_system extends bookcollections with library_collections {
+  var books = [
+    //THIS LIST IS A COPY OF TITLES1 USED FOR BORROWING AND RETURNING OF BOOKS
+    'A First Course in Aerial Robot and Drones',
+    'Computer Graphics Through OpenGL:from theory to experiments',
+    'The Philosophy Book BIG IDEAS SIMPLY EXPLAINED',
+    'The Politics of Pure Science Second Edition',
+    'Pop Out Around the World: Read, Build, and Play from New York to Beijing (Board book)',
+    'Guns, Germs, and Steel: The Fates of Human Societies'
+  ];
+  //STRING SEMI,TITLE,GENRE,AUTHOR SERVES AS A SEPARATOR WHEN PRINTING ALL BOOKS IN LIBRARY COLLECTION
+  String semi = 'ISBN:';
+  String title = '  Title:';
+  String genre = '  Genre:';
+  String author = '  Author:';
+  //VAR LIST1,LIST2,LIST3,LIST4 SERVES AS A TEMP STORAGE OF TITLE,AUTHOR,GENRE, AND ISBN FROM THE LENDBOOK FUNCTION
+  var list1 = [];
+  var list2 = [];
+  var list3 = [];
+  var list4 = [];
+  int count = 0; //FOR COUNTING HOW MANY BOOKS IN THE LIBRARY COLLECTION
+  //VAR ISBN,TITLE,GENRE,AUTHOR IS THE INPUT VARIABLES
+  var ISBN;
+  var Title;
+  var Genre;
+  var Author;
+//TEMP1 METHOD IS FOR COMBINING BOOKS AND BOOK1 STORAGE AND UPDATING THE CURRENT LIBRARY COLLECTION
+  void temp1() {
+    temp = [books, book1].expand((x) => x).toList();
+    temp2 = temp;
+  }
+
+//THIS FUNCTION IS FOR ADDING NEW BOOK
+  void addbooks() {
+    print('Please Provide the Required Information');
+    print('\n');
+    print('Title');
+    Title = stdin.readLineSync(); //BOOK TITLE INPUT FOR ADDING NEW BOOK
+    print('Genre');
+    Genre = stdin.readLineSync(); //BOOK GENRE INPUT FOR ADDING NEW BOOK
+    print('Author');
+    Author = stdin.readLineSync(); //BOOK AUTHOR INPUT FOR ADDING NEW BOOK
+    print('ISBN');
+    ISBN = stdin.readLineSync(); //BOOK ISBN INPUT FOR ADDING NEW BOOK
+    print('\n');
+    Titles1.add(Title); //FOR ADDING THE NEW TITLE IN THE TITLES1 LIST
+    Genre1.add(Genre); //FOR ADDING THE NEW GENRE IN THE TITLES1 LIST
+    Authors1.add(Author); //FOR ADDING THE AUTHOR TITLE IN THE TITLES1 LIST
+    ISBN1.add(ISBN); //FOR ADDING THE NEW ISBN IN THE TITLES1 LIST
+    books.add(Title!); //FOR ADDING THE NEW TITLE IN THE BOOKS LIST
+    printall1();
+  }
+
+//THIS METHOD IS RESPONSIBLE FOR PRINTING ALL BOOKS IN LIBRARY COLLECTIONS
+  void printall1() {
+    dynamic combine = [];
+    for (int i = 0; i < books.length; i++) {
+      combine = semi + //PRINTING ELEMENTS BY INDEX
+          ISBN1[i] +
+          title +
+          books[i] +
+          genre +
+          Genre1[i] +
+          author +
+          Authors1[i];
+      print(combine);
+    }
+  }
+
+//THIS METHOD IS FOR COUNTING BOOKS
+  void countallbooks() {
+    int countbooks = Titles1.length;
+    print("Number of Books in the Library Collections: $countbooks");
+    print('\n');
+  }
+
+//THIS METHOD IS FOR LENDING BOOKS
+  void lendbook(var name, var address) {
+    int index = 0; //FOR INDEX VALUE
+    temp1(); //FOR GETTING THE UPDATED LIST OF PRESENT BOOKS IN THE LIBRARY COLLECTION
+    print(temp2);
+    print('NOTE: CASE SENSITIVE');
+    print("Please type the title you want to borrow");
+    String? borrowbook = stdin.readLineSync(); //INPUT WHAT BOOK YOU WANT LEND
+
+    if (temp2.contains(borrowbook) == true) {
+      //CHECKING IF THE BOOK YOU WANT TO LEND IS PRESENT IN THE LIBRARY COLLECTION
+      namelist.add(name); //ADDING BORROWERS NAME IN THE NAMELIST
+      addresslist.add(address); //ADDING BORROWERS ADDRESS IN THE ADDRESSLIST
+      borrowedbooks.add(borrowbook); //ADDING THE BOOK IN THE BORROWED LIST
+      int index = temp2.indexOf(
+          borrowbook!); //FOR KNOWING THE INDEX OF THE BORROWED BOOK AND USED FOR LOCATING THE CORRESPONDING ATTRIBUTE FOR REMOVING IN THE LIBRARY COLLECTION
+      var Titlestemp = Titles1.elementAt(
+          index); //FOR STORING REMOVED TITLE OF THE BORROWED BOOK IN THE LIBRARY COLLECTION
+      list1.add(Titlestemp); //ADDING THE VALUE IN THE LIST1
+      Titles1.removeAt(index); //REMOVING THE VALUE IN THE TITLES1 LIST
+      var ISBNtemp = ISBN1.elementAt(
+          index); //FOR STORING REMOVED ISBN OF THE BORROWED BOOK IN THE LIBRARY COLLECTION
+      list2.add(ISBNtemp); //ADDING THE VALUE IN THE LIST2
+      ISBN1.removeAt(index); //REMOVING THE VALUE IN THE ISBN1 LIST
+      var Genretemp = Genre1.elementAt(
+          index); //FOR STORING REMOVED GENRE OF THE BORROWED BOOK IN THE LIBRARY COLLECTION
+      list3.add(Genretemp); //ADDING THE VALUE IN THE LIST3
+      Genre1.removeAt(index); //REMOVING THE VALUE IN THE GENRE1 LIST
+      var Author = Authors1.elementAt(
+          index); //FOR STORING REMOVED AUTHOR OF THE BORROWED BOOK IN THE LIBRARY COLLECTION
+      list4.add(Author); //ADDING THE VALUE IN THE LIST4
+      Authors1.removeAt(index); //REMOVING THE VALUE IN THE AUTHORS1 LIST
+      books.remove(borrowbook); //REMOVING THE BORROWED BOOK IN THE BOOKS LIST
+      temp2.remove(borrowbook); //REMOVING THE BORROWED BOOK IN THE TEMP2 LIST
+      print('\n');
+      print(
+          '$name Borrowed: $borrowbook  '); //PRINTING THEN NAME AND THE BORROWED BOOK
+    } else {
+      print("\n");
+      print('NOTE: CASE SENSITIVE');
+      print("The book you want to borrow is not in the library collection");
+    }
+  }
+
+//THIS METHOS IS FOR CHECKING THE THE BOOK IS PRESENT IN THE LIBRARY COLLECTION AND ITS LENDER
+  void check(var checkbook) {
+    temp1();
+    int index = 0;
+    dynamic lender = []; //LIST FOR THE NAME OF LENDERS
+    if (temp2.contains(checkbook) == true) {
+      //CHECKING IS THE BOOK IS PRESENT
+      print("\n");
+      print("the book : $checkbook is present");
+      print("\n");
+    } else {
+      index = borrowedbooks.indexOf(
+          checkbook); //FINDING THE INDEX OF THE BORROWED BOOK FROM THE BORROWED BOOK LIST
+      lender = namelist.elementAt(index); //STORES THE SEARCHED VALUE
+      print("\n");
+      print(
+          "The Book : $checkbook is Lended by $lender"); //PRINT THE BOOK AND THE LENDER
+      print("\n");
+    }
+  }
+
+//THIS METHOD IS FOR RETURNING BOOKS
+  void returnbook() {
+    print("Please type your full name");
+    var name = stdin.readLineSync(); //INPUT NAME OF THE LENDER
+    print("Please type your address");
+    var address = stdin.readLineSync(); //ADDRESS OF THE LENDER
+    print("Please type the title you want to return");
+    print('Titles');
+    print(borrowedbooks);
+    print('\n');
+    var returnbook = stdin.readLineSync(); //BORROWED BOOK INPUT
+    //FOR CHECKING IF THE BOOK PRESENT AND THE NAME IN THE BORROWEDBOOK AND NAMELIST
+    namelist.add(name);
+    addresslist.add(address);
+    if (borrowedbooks.contains(returnbook) & namelist.contains(name) == true) {
+      namelist.remove(name); //REMOVING LENDER'S NAME IN THE NAMELIST
+      addresslist
+          .remove(address); //REMOVING LENDER'S ADDRESS IN THE ADDRESSLIST
+      int index = borrowedbooks.indexOf(
+          returnbook); //SEARCHING THE RETURNBOOK IN THE BORROWED BOOK AND RETURNS THE INDEX
+      var ISBNtemp = list2.elementAt(
+          index); //SEARCHING AND STORING ISBN VALUE BASED ON THE INDEX
+      ISBN1.add(
+          ISBNtemp); //ADDING THE ISBN OF THE RETURNED BOOK TO THE ISBN1 LIST
+      var Titletemp = list1.elementAt(
+          index); //SEARCHING AND STORING TITLE VALUE BASED ON THE INDEX
+      Titles1.add(
+          Titletemp); //ADDING THE TITLE OF THE RETURNED BOOK TO THE ISBN1 LIST
+      var Genretemp = list3.elementAt(
+          index); //SEARCHING AND STORING GENRE VALUE BASED ON THE INDEX
+      Genre1.add(
+          Genretemp); //ADDING THE GENRE OF THE RETURNED BOOK TO THE ISBN1 LIST
+      var Authortemp = list4.elementAt(
+          index); //SEARCHING AND STORING AUTHOR VALUE BASED ON THE INDEX
+      Authors1.add(
+          Authortemp); //ADDING THE AUTHOR OF THE RETURNED BOOK TO THE ISBN1 LIST
+      borrowedbooks.remove(
+          returnbook); //REMOVING THE RETURNBOOK FRON THE BORROWEDBOOKS LIST
+      books.add(returnbook!); //ADDING THE RETURNBOOK BACK TO THE BOOKS LIST
+      temp2.add(returnbook); //ADDING THE RETURNBOOK BACK TO THE TEMP2 LIST
+      returnedbooks.add(
+          returnbook); //ADDING THE RETURNED BOOKS TO THE RETURNBOOK LIST FOR PRINTING
+      print('\n');
+      print('The Book: $returnbook is returned');
+    } else {
+      print("The book is not present or haven't been borrowed ");
+    }
+  }
+
+//THIS METHOD
+  void printreturnedbooks() {
+    print("List of Returned Books");
+    print(returnedbooks);
+    print('\n');
+  }
+}
+
+class bookcollections {
+  var book1 = []; //A TEMPORARY STORAGE USED IN THE TEMP1 METHOD
+  List borrowedbooks = []; //STORAGE FOR BORROWED BOOKS
+  var returnedbooks = []; //STORAGE FOR RETURNED BOOKS
+  var namelist =
+      []; //TEMPORARY STORAGE FOR NAMELIST USED FOR PRINTBORROWEDBOOKS METHOD
+  var addresslist =
+      []; //TEMPORARY STORAGE FOR ADDRESSLIST USED FOR PRINTBORROWEDBOOKS METHOD
+
+  void printborrowedbooks() {
+    print('Lend Books');
+    dynamic printborrowedbooks; //USED FOR PRINTING
+    String name = 'Name: '; //SEPARATOR
+    String address = ' Address: '; //SEPARATOR
+    String lendbook = ' Lend Book: '; //SEPARATOR
+    if (borrowedbooks.isEmpty) {
+      //CHECK IF BORROWEDBOOKS IS EMPTY
+      print('Empty!');
+    } else {
+      for (int i = 0; i < borrowedbooks.length; i++) {
+        printborrowedbooks = name + //STORING BY INDEX
+            namelist[i] +
+            address +
+            addresslist[i] +
+            lendbook +
+            borrowedbooks[i];
+        print("$printborrowedbooks");
+      }
+    }
+  }
+}
+
+void main(List<String> arguments) {
+  bookcollections borrowbook = bookcollections();
+  Library_system libsys = Library_system();
+  String? choice;
+
+  do {
+    print("CHOICES: 1: Lend Books ");
+    print("         2: Return Books");
+    print("         3: Library Inventory");
+    print("         0: EXIT");
+    print("\n");
+    choice = stdin.readLineSync();
+    switch (choice) {
+      //SWITCH
+      case '1':
+        print('LEND BOOKS');
+        print("Please type your full name");
+        var name1 = stdin.readLineSync(); //USER NAME
+        print("Please type your address");
+        var address1 = stdin.readLineSync(); //USER ADDRESS
+        libsys.lendbook(name1, address1);
+        print("\n");
+        break;
+      case '2':
+        libsys.returnbook();
+        print('\n');
+        break;
+      case '3':
+        print("1 = to check if the book is present in library collection");
+        print("2 = All books in Library Collection");
+        print("3 = Count all books");
+        print("4 = Borrowed books ");
+        print("5 = Returned books");
+        print("6 = add books");
+
+        String? ch1 = stdin.readLineSync();
+        switch (ch1) {
+          case '1':
+            print("Input book title:");
+            var book = stdin.readLineSync(); //CHECKING BOOK IF PRESENT INPUT
+            libsys.check(book);
+            break;
+          case '2':
+            libsys.printall1();
+            break;
+          case '3':
+            libsys.countallbooks();
+            break;
+          case '4':
+            libsys.printborrowedbooks();
+            print('\n');
+            break;
+          case '5':
+            libsys.printreturnedbooks();
+            print('\n');
+            break;
+          case '6':
+            libsys.addbooks();
+            break;
+        }
+        break;
+      case '0':
+        break;
+      default:
+        {
+          print('Invalid choice');
+        }
+    }
+  } while (choice != "0");
+}
